@@ -10,7 +10,6 @@
 :uri-preview: https://antora.gitlab.io/antora-ui-default
 :uri-hbs: http://handlebarsjs.com
 :uri-gulp: http://gulpjs.com
-:uri-yarn: https://yarnpkg.com
 :uri-npm: https://npmjs.com
 :uri-node: https://nodejs.org
 :uri-nvm: https://github.com/creationix/nvm
@@ -49,24 +48,24 @@ Handlebars (file extension: `.hbs`)::
 Templates contain placeholders (i.e., mustache expressions like `+{{{page.title}}}+`) into which content is injected from a model.
 They also accommodate simple logic expressions for repeating content or including it conditionally (e.g., `+{{#each navigation}}+`) as well as partials (e.g., `+{{> header}}+`).
 
-Gulp (script file: [.path]_gulpfile.js_)::
+Gulp (script file: [.path]_gulpfile.js/index.js_)::
 {uri-gulp}[Gulp] is a build tool for JavaScript projects.
 It configures a collection of tasks that can be used to perform automated tasks such as compiling files, running a preview server, or publishing a release.
 
-Yarn (command: `yarn`)::
-{uri-yarn}[Yarn] manages software packages (i.e., software dependencies) that it downloads from {uri-npm}.
+npm (command: `npm`)::
+npm manages software packages (i.e., software dependencies) that it downloads from {uri-npm}.
 Software this project uses includes libraries that handle compilation as well as shared assets such as font files that are distributed as npm packages.
-(While npm itself is often used to install Yarn, we do not use npm for any other purpose).
+npm is part of Node.js.
 
 package.json:::
-This file keeps track of the dependencies (described using fuzzy versions) that Yarn should fetch.
+This file keeps track of the dependencies (described using fuzzy versions) that npm (or Yarn) should fetch.
 
-yarn.lock:::
-This file contains a report of which dependencies Yarn resolved.
-This information ensures that the dependency resolution is reproducible.
+package-lock.json:::
+This file contains a report of which dependencies npm resolved.
+This information ensures that dependency resolution is reproducible.
 
 node_modules/:::
-A local cache of resolved dependencies that Yarn (or npm) fetches.
+A local cache of resolved dependencies that npm (or Yarn) fetches.
 
 PostCSS::
 This project does not use a CSS preprocessor such as Sass or LESS.
@@ -91,9 +90,12 @@ Here's how the files are structured in the UI project:
 [.output]
 ....
 README.adoc
-gulpfile.js
+gulpfile.js/
+  index.js
+  lib/
+  tasks/
 package.json
-yarn.lock
+package-lock.json
 src/
   css/
     base.css
@@ -120,19 +122,9 @@ src/
     ...
     vendor/
       highlight.js
-preview-site-src/
+preview-src/
   index.html
   ui-model.yml
-tasks/
-  lib/
-    gulp-prettier-eslint.js
-  build.js
-  build-preview.js
-  format.js
-  lint-css.js
-  lint-js.js
-  pack.js
-  preview.js
 ....
 
 A Gulp build is used to compile and assemble the UI project files into a UI bundle.
